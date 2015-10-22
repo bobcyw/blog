@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <!-- saved from url=(0036)http://v3.bootcss.com/examples/blog/ -->
-<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="description" content="从用户设计, 内部设计和隐喻设计三个方面,介绍git_clean的设计思路">
     <meta name="author" content="bobcyw@163.com">
-    <link rel="icon" type="image/png" href="/blog/Blog Template for Bootstrap_files/favicon.png" sizes="any">
+    <link rel="icon" type="image/png" href="/blog/Blog Template for Bootstrap_files/favicon.png"
+          sizes="any">
     <!--<link rel="icon" href="http://v3.bootcss.com/favicon.ico">-->
     <!--<link rel="icon" href="http://v3.bootcss.com/favicon.ico">-->
 
@@ -20,175 +23,255 @@
     <link href="/blog/Blog Template for Bootstrap_files/blog.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--[if lt IE 9]>
+    <script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="/blog/Blog Template for Bootstrap_files/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-  <style id="style-1-cropbar-clipper">/* Copyright 2014 Evernote Corporation. All rights reserved. */
-.en-markup-crop-options {
-    top: 18px !important;
-    left: 50% !important;
-    margin-left: -100px !important;
-    width: 200px !important;
-    border: 2px rgba(255,255,255,.38) solid !important;
-    border-radius: 4px !important;
-}
+    <style id="style-1-cropbar-clipper">/* Copyright 2014 Evernote Corporation. All rights reserved. */
+    .en-markup-crop-options {
+        top: 18px !important;
+        left: 50% !important;
+        margin-left: -100px !important;
+        width: 200px !important;
+        border: 2px rgba(255, 255, 255, .38) solid !important;
+        border-radius: 4px !important;
+    }
 
-.en-markup-crop-options div div:first-of-type {
-    margin-left: 0px !important;
-}
-</style></head>
+    .en-markup-crop-options div div:first-of-type {
+        margin-left: 0px !important;
+    }
+    </style>
+</head>
 
-  <body>
+<body>
 
-    <div class="blog-masthead">
-      <div class="container">
+<div class="blog-masthead">
+    <div class="container">
         <nav class="blog-nav">
-          <a class="blog-nav-item active" href="http://v3.bootcss.com/examples/blog/#">Home</a>
-          <a class="blog-nav-item" href="http://v3.bootcss.com/examples/blog/#">New features</a>
-          <a class="blog-nav-item" href="http://v3.bootcss.com/examples/blog/#">Press</a>
-          <a class="blog-nav-item" href="http://v3.bootcss.com/examples/blog/#">New hires</a>
-          <a class="blog-nav-item" href="http://v3.bootcss.com/examples/blog/#">About</a>
+            <a class="blog-nav-item active" href="http://v3.bootcss.com/examples/blog/#">Home</a>
+            <a class="blog-nav-item" href="http://v3.bootcss.com/examples/blog/#">New features</a>
+            <a class="blog-nav-item" href="http://v3.bootcss.com/examples/blog/#">Press</a>
+            <a class="blog-nav-item" href="http://v3.bootcss.com/examples/blog/#">New hires</a>
+            <a class="blog-nav-item" href="http://v3.bootcss.com/examples/blog/#">About</a>
         </nav>
-      </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="blog-header">
+        <h1 class="blog-title">git_clean设计构思</h1>
+
+        <p class="lead blog-description">从用户设计, 内部设计和隐喻设计三个方面,介绍git_clean的设计思路</p>
     </div>
 
-    <div class="container">
-
-      <div class="blog-header">
-        <h1 class="blog-title">git_clean设计构思</h1>
-        <p class="lead blog-description">The official example template of creating a blog with Bootstrap.</p>
-      </div>
-
-      <div class="row">
+    <div class="row">
 
         <div class="col-sm-8 blog-main">
 
-          <div class="blog-post">
-            <h2 id="section">现状</h2>
-<p>现在开源软件已经成为了时尚,但很多时候私有软件想开源,却面临大量的密钥,密码和内部信息文件需要清理.  </p>
+            <div class="blog-post">
+                <p><a href="https://github.com/bobcyw/git_cleaner">github</a></p>
 
-<h3 id="section-1">目前的解决办法</h3>
-<ol>
-  <li>git branch-filter  </li>
-  <li>BFG  </li>
-</ol>
+<h2 id="section">现状</h2>
+<p>现在开源软件已经成为了趋势,很多时候私有软件开源,面临大量敏感文件需要清理(密钥,密码和内部信息).  </p>
 
-<p>这两个办法都需要指定文件名称,同时都是命令行模式.  <br />
-现状,很多清理的时候并不知道文件名称,很多敏感信息都散落在各个文件里,只知道一些信息的特征,但不知道名字,比如rsa密钥都包含—–BEGIN RSA PRIVATE KEY—–这样的字符串,而包含了password,密码这样字符串的信息都必须小心处理.
+<h4 id="section-1">目前的解决办法</h4>
+<ul>
+  <li>git branch-filter</li>
+</ul>
+
+<blockquote>
+  <p><sup>git自带的清理命令,可以回溯删除所有commite里包含的指定文件或者目录</sup></p>
+</blockquote>
+
+<ul>
+  <li>BFG</li>
+</ul>
+
+<blockquote>
+  <p><sup>git branch-filter的升级版,可以删除超出指定大小的文件,比如意外加入的过大的图片等</sup></p>
+</blockquote>
+
+<p>这两个办法都需要指定文件名称,都是命令行模式,BFG也没有对删除尺寸较小的敏感文件给出解决方案.</p>
+
+<h4 id="section-2">痛点</h4>
+
+<p>很多清理的时候并不知道文件名称,很多敏感信息都散落在各个文件里,只知道一些信息的特征,但不知道名字,比如rsa密钥都包含—–BEGIN RSA PRIVATE KEY—–这样的字符串,而包含了password,密码这样字符串的信息都必须小心处理.
 现有的上述两种工具并不提供检索功能.  </p>
 
-<h2 id="gitclean">所以git_clean应运而生.</h2>
+<h2 id="gitclean">git_clean应运而生</h2>
 
-<h3 id="section-2">用户使用设计</h3>
+<blockquote>
+  <p><sup>git_clean功能同样是删除git里不应该有的敏感数据,它主要提供了文件配置,以及特征值检索的功能,由于使用配置文件还衍生出可以对不同目录进行不同的清理.</sup></p>
+</blockquote>
 
-<p>借鉴现在的docker和AWS描述方式,软件行为定义用一个配置文件来定义,方便复用和修改.<br />
-配置文件的格式优先选择yaml,这个格式结构比json更简洁.<br />
-用户有三种描述需要删除文件的方式,指定文件,指定目录,指定特征值.<br />
-从执行的角度,参考2to3,有只输出报告,和真实删除两种模式.
-从git角度看,由于子模块的存在,每个模块的配置文件可能不同.所以,配置文件也应该像树一样有节点.彼此可以连接.  </p>
+<h4 id="section-3">用户使用设计</h4>
 
-<h3 id="section-3">内部细节设计</h3>
-<p>路径表述,参考git的设计,路径全部使用相对路径.所以衍生出每个配置文件的”根目录”指定问题.这个问题在设计初期使用直接指定的方法,但在后来的使用过程中,感觉很啰嗦,化简思考后,把显示指定目录改为隐性指定目录,转成隐喻设计.<br />
-指定特征值的方式,可能把一些不该删除的文件也删除掉,比如配置文件本身.或者某些不想删除的文件  </p>
+<ul>
+  <li>借鉴现在的docker和AWS描述方式,软件行为定义用一个配置文件来定义,方便复用和修改.  </li>
+  <li>配置文件的格式优先选择yaml<sup><a href="http://docs.saltstack.cn/zh_CN/latest/topics/yaml/index.html">简明教程</a>,<a href="http://yaml.org/">官方链接</a></sup>,这个格式结构比json更简洁.  </li>
+  <li>用户有三种描述需要删除文件的方式,指定文件,指定目录,指定文件的特征值.  </li>
+  <li>从执行的角度,参考python的2to3模块,有只输出报告,和真实删除两种模式.</li>
+  <li>从git角度看,由于子模块的存在,每个模块的配置文件可能不同.所以,配置文件也应该像树一样有节点.彼此可以连接.  </li>
+</ul>
 
-<h3 id="section-4">隐喻设计</h3>
-<p>这里的隐喻设计特指虽然可以把接口暴露给用户,让用户定义,但有符合用户潜意识的定义模式,于是优先使用符合用户潜意识的模式.<br />
-配置文件管理指定的”根目录”,大部分情况,把配置文件放在哪个目录下,就表示对哪个目录生效,这是常见的表述方式,用户已经形成习惯,所以在配置文件里再指定”根目录”是画蛇添足的,扭曲的指定,也让用户不能按照习惯使用.<br />
-默认操作并不删除文件,而只是给出要删除文件的报告,这方便新手用户,在不知情的情况下也不会误删文件.  </p>
+<h4 id="section-4">内部细节设计</h4>
 
-          </div><!-- /.blog-post -->
+<ul>
+  <li>文件的路径表述,参考git的设计,路径全部使用相对路径.进而衍生出每个配置文件的”根目录”指定问题.这个问题在设计初期使用直接指定的方法,但在后来的使用过程中,感觉很啰嗦,化简思考后,把显示指定目录改为隐性指定目录,转成<a href="#隐喻设计">隐喻设计</a>.  </li>
+  <li>指定特征值的方式,可能把一些不该删除的文件也删除掉,比如配置文件本身.或者某些不想删除的文件  </li>
+</ul>
 
-          <div class="blog-post">
-            <h2 class="blog-post-title">Another blog post</h2>
-            <p class="blog-post-meta">December 23, 2013 by <a href="http://v3.bootcss.com/examples/blog/#">Jacob</a></p>
+<h4 id="隐喻设计">隐喻设计</h4>
 
-            <p>Cum sociis natoque penatibus et magnis <a href="http://v3.bootcss.com/examples/blog/#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
-            <blockquote>
-              <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-            </blockquote>
-            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-            <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-          </div><!-- /.blog-post -->
+<blockquote>
+  <p><sup>此处的隐喻设计特指某种潜意识设计,即用户不用学习和理解,通过跟以往经验进行对比就能直接理解的设计</sup></p>
+</blockquote>
 
-          <div class="blog-post">
-            <h2 class="blog-post-title">New feature</h2>
-            <p class="blog-post-meta">December 14, 2013 by <a href="http://v3.bootcss.com/examples/blog/#">Chris</a></p>
+<ul>
+  <li>配置文件管理指定的”根目录”,大部分情况,把配置文件放在哪个目录下,就表示对哪个目录生效,这种常见的表述方式,用户已经形成习惯,所以在配置文件里指定”根目录”没有必要,徒添用户额外的学习负担.  </li>
+  <li>默认操作并不删除文件,而只是给出要删除文件的报告,这方便新手用户,在不知情的情况下也不会误删文件.  </li>
+</ul>
 
-            <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <ul>
-              <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
-              <li>Donec id elit non mi porta gravida at eget metus.</li>
-              <li>Nulla vitae elit libero, a pharetra augue.</li>
-            </ul>
-            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-            <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
-          </div><!-- /.blog-post -->
+            </div>
+            <!-- /.blog-post -->
 
-          <nav>
-            <ul class="pager">
-              <li><a href="http://v3.bootcss.com/examples/blog/#">Previous</a></li>
-              <li><a href="http://v3.bootcss.com/examples/blog/#">Next</a></li>
-            </ul>
-          </nav>
+            <div class="blog-post">
+                <h2 class="blog-post-title">Another blog post</h2>
 
-        </div><!-- /.blog-main -->
+                <p class="blog-post-meta">December 23, 2013 by <a href="http://v3.bootcss.com/examples/blog/#">Jacob</a>
+                </p>
+
+                <p>Cum sociis natoque penatibus et magnis <a href="http://v3.bootcss.com/examples/blog/#">dis parturient
+                    montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam
+                    venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit
+                    amet fermentum.</p>
+                <blockquote>
+                    <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare
+                        vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                </blockquote>
+                <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet
+                    fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+
+                <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo
+                    luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac
+                    consectetur ac, vestibulum at eros.</p>
+            </div>
+            <!-- /.blog-post -->
+
+            <div class="blog-post">
+                <h2 class="blog-post-title">New feature</h2>
+
+                <p class="blog-post-meta">December 14, 2013 by <a href="http://v3.bootcss.com/examples/blog/#">Chris</a>
+                </p>
+
+                <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia
+                    bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus,
+                    tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet
+                    risus.</p>
+                <ul>
+                    <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
+                    <li>Donec id elit non mi porta gravida at eget metus.</li>
+                    <li>Nulla vitae elit libero, a pharetra augue.</li>
+                </ul>
+                <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet
+                    fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+
+                <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
+            </div>
+            <!-- /.blog-post -->
+
+            <nav>
+                <ul class="pager">
+                    <li><a href="http://v3.bootcss.com/examples/blog/#">Previous</a></li>
+                    <li><a href="http://v3.bootcss.com/examples/blog/#">Next</a></li>
+                </ul>
+            </nav>
+
+        </div>
+        <!-- /.blog-main -->
 
         <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-          <div class="sidebar-module sidebar-module-inset">
-            <h4>About</h4>
-            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-          </div>
-          <div class="sidebar-module">
-            <h4>Archives</h4>
-            <ol class="list-unstyled">
-              <li><a href="http://v3.bootcss.com/examples/blog/#">March 2014</a></li>
-              <li><a href="http://v3.bootcss.com/examples/blog/#">February 2014</a></li>
-              <li><a href="http://v3.bootcss.com/examples/blog/#">January 2014</a></li>
-              <li><a href="http://v3.bootcss.com/examples/blog/#">December 2013</a></li>
-              <li><a href="http://v3.bootcss.com/examples/blog/#">November 2013</a></li>
-              <li><a href="http://v3.bootcss.com/examples/blog/#">October 2013</a></li>
-              <li><a href="http://v3.bootcss.com/examples/blog/#">September 2013</a></li>
-              <li><a href="http://v3.bootcss.com/examples/blog/#">August 2013</a></li>
-              <li><a href="http://v3.bootcss.com/examples/blog/#">July 2013</a></li>
-              <li><a href="http://v3.bootcss.com/examples/blog/#">June 2013</a></li>
-              <li><a href="http://v3.bootcss.com/examples/blog/#">May 2013</a></li>
-              <li><a href="http://v3.bootcss.com/examples/blog/#">April 2013</a></li>
-            </ol>
-          </div>
-          <div class="sidebar-module">
-            <h4>Elsewhere</h4>
-            <ol class="list-unstyled">
-              <li><a href="http://v3.bootcss.com/examples/blog/#">GitHub</a></li>
-              <li><a href="http://v3.bootcss.com/examples/blog/#">Twitter</a></li>
-              <li><a href="http://v3.bootcss.com/examples/blog/#">Facebook</a></li>
-            </ol>
-          </div>
-        </div><!-- /.blog-sidebar -->
+            <div class="sidebar-module sidebar-module-inset">
+                <h4>About</h4>
 
-      </div><!-- /.row -->
+                <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet
+                    fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+            </div>
+            <div class="sidebar-module">
+                <h4>Archives</h4>
+                <ol class="list-unstyled">
+                    
+                    <li><a href="/blog/2015/10/20/git_clean%E7%BC%96%E7%A0%81.html">git_clean编码</a> 20 Oct 2015
+                    </li>
+                    
+                    <li><a href="/blog/2015/10/20/git%20_clean%E8%AE%BE%E8%AE%A1%E6%9E%84%E6%80%9D.html">git_clean设计构思</a> 20 Oct 2015
+                    </li>
+                    
+                    <li><a href="/blog/2015/10/19/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2.html">第一篇博客</a> 19 Oct 2015
+                    </li>
+                    
+                    <li><a href="/blog/2015/10/19/Github%20generate%20auto.html">Github generate auto</a> 19 Oct 2015
+                    </li>
+                    
 
-    </div><!-- /.container -->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">March 2014</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">February 2014</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">January 2014</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">December 2013</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">November 2013</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">October 2013</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">September 2013</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">August 2013</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">July 2013</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">June 2013</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">May 2013</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">April 2013</a></li>-->
+                </ol>
+            </div>
+            <div class="sidebar-module">
+                <h4>Elsewhere</h4>
+                <ol class="list-unstyled">
+                    <li><a href="https://github.com/bobcyw/">GitHub</a></li>
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">Twitter</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">Facebook</a></li>-->
+                </ol>
+            </div>
+        </div>
+        <!-- /.blog-sidebar -->
 
-    <footer class="blog-footer">
-      <p>Blog template built for <a href="http://getbootstrap.com/">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-      <p>
+    </div>
+    <!-- /.row -->
+
+</div>
+<!-- /.container -->
+
+<footer class="blog-footer">
+    <p>Blog template built for <a href="http://getbootstrap.com/">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.
+    </p>
+
+    <p>
         <a href="http://v3.bootcss.com/examples/blog/#">Back to top</a>
-      </p>
-    </footer>
+    </p>
+</footer>
 
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/blog/Blog Template for Bootstrap_files/jquery.min.js"></script>
-    <script src="/blog/Blog Template for Bootstrap_files/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="/blog/Blog Template for Bootstrap_files/ie10-viewport-bug-workaround.js"></script>
-  
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/blog/Blog Template for Bootstrap_files/jquery.min.js"></script>
+<script src="/blog/Blog Template for Bootstrap_files/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="/blog/Blog Template for Bootstrap_files/ie10-viewport-bug-workaround.js"></script>
 
-<iframe id="rdbIndicator" width="100%" height="270" border="0" src="/blog/Blog Template for Bootstrap_files/indicator.html" style="display: none; border: 0; position: fixed; left: 0; top: 0; z-index: 2147483647"></iframe></body></html>
+
+<iframe id="rdbIndicator" width="100%" height="270" border="0"
+        src="/blog/Blog Template for Bootstrap_files/indicator.html"
+        style="display: none; border: 0; position: fixed; left: 0; top: 0; z-index: 2147483647"></iframe>
+</body>
+</html>
