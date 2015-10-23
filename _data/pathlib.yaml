@@ -1,0 +1,41 @@
+- old: |
+    os.path.base(fn)
+    #得到文件的目录
+  new: "obj.parent"
+- old: |
+    os.path.base(os.path.base(fn))
+    #得到文件的父目录
+  new: obj.parent.parent
+- old: |
+    fn_path = os.path.base(fn)
+    os.path.join(fn_path, "abc.txt")
+    #得到同目录下另外一个文件的路径
+  new: obj.parent.joinpath("abc.txt")
+- old: |
+    with open(fn, "utf-8", "r") as f:
+      content = f.read()
+    #读取文本文件的内容
+  new: |
+    #python3.4
+    content = obj.read_bytes().decode("utf-8")
+    #or
+    #python3.5
+    content = obj.read_text("utf-8")
+- old: |
+    fn_path = os.path.base(fn)
+    glob(os.join(fn_path, "*.txt"))
+    #枚举fn目录下的所有txt文件
+  new: obj.parent.glob("*.txt")
+- old: |
+    def enum_dir(given_path: str, handler):
+        #!@$#!@#$@#
+        #!$#!@$$#!$
+        #@!$#@!$#@1$
+    #遍历目录,并对目录下每个文件调用handler
+  new: |
+    def enum_dir(obj: pathlib.Path, handler):
+      for item in obj.iterdir():
+          if item.is_dir():
+              enum_dir(item, handler)
+          if item.is_file():
+              handler(item)
