@@ -7,14 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <meta name="description" content="">
+    <meta name="description" content="介绍pathlib的使用,让小伙伴们跟上时代">
     <meta name="author" content="bobcyw@163.com">
     <link rel="icon" type="image/png" href="/blog/Blog Template for Bootstrap_files/favicon.png"
           sizes="any">
     <!--<link rel="icon" href="http://v3.bootcss.com/favicon.ico">-->
     <!--<link rel="icon" href="http://v3.bootcss.com/favicon.ico">-->
 
-    <title>我的blog</title>
+    <title>走近pathlib</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/blog/Blog Template for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
@@ -67,9 +67,9 @@
 <div class="container">
 
     <div class="blog-header">
-        <h1 class="blog-title">我的blog</h1>
+        <h1 class="blog-title">走近pathlib</h1>
 
-        <p class="lead blog-description"></p>
+        <p class="lead blog-description">介绍pathlib的使用,让小伙伴们跟上时代</p>
     </div>
 
     <div class="row">
@@ -77,35 +77,127 @@
         <div class="col-sm-8 blog-main">
 
             <div class="blog-post">
-                <p>最新文章</p>
-<ul>
-    
-    <li>
-        <p><a href="/blog/2015/10/23/%E8%B5%B0%E8%BF%91pathlib.html">走近pathlib</a> 23 Oct 2015</p>
-        <p class="lead blog-description"><small>介绍pathlib的使用,让小伙伴们跟上时代</small></p>
-    </li>
-    
-    <li>
-        <p><a href="/blog/2015/10/23/%E8%B5%B0%E8%BF%91logs%E6%A8%A1%E5%9D%97.html">走近logs模块</a> 23 Oct 2015</p>
-        <p class="lead blog-description"><small>logs是python的理想国,让大家摆脱print使用的</small></p>
-    </li>
-    
-    <li>
-        <p><a href="/blog/2015/10/23/%E8%AE%A4%E8%AF%86%E5%8F%8C%E4%B8%8B%E5%88%92%E7%BA%BF%E5%BC%80%E5%A4%B4%E7%9A%84%E9%82%A3%E4%BA%9B%E5%8F%98%E9%87%8F.html">双下划线开头的那些变量</a> 23 Oct 2015</p>
-        <p class="lead blog-description"><small>面试有人会问双下划线和单下划线各有什么含义,纠结这些之乎者也的时候,系统提供的双下划线变量都认齐全了嘛?</small></p>
-    </li>
-    
-    <li>
-        <p><a href="/blog/2015/10/20/git_clean%E7%BC%96%E7%A0%81.html">git_clean编码</a> 20 Oct 2015</p>
-        <p class="lead blog-description"><small>简要介绍一下编程流程</small></p>
-    </li>
-    
-    <li>
-        <p><a href="/blog/2015/10/20/git%20_clean%E8%AE%BE%E8%AE%A1%E6%9E%84%E6%80%9D.html">git_clean设计构思</a> 20 Oct 2015</p>
-        <p class="lead blog-description"><small>从用户设计, 内部设计和隐喻设计三个方面,介绍git_clean的设计思路</small></p>
-    </li>
-    
-</ul>
+                <h2 id="section">简介</h2>
+<p>pathlib是Python3.4以后引入的一个新模块,也是现在Python里力推的关于文件和目录的操作模块,用以替代os.path,glob.</p>
+
+<p>由于设计理念不同,初接触的人会对这个模块完全摸不到头脑,主要原因是无法建立正确的心智模型.因为pathlib是面向对象的,而老式的os.path,glob是面向过程的.</p>
+
+<h2 id="section-1">对比</h2>
+<p>下面将新老用列表的方式进行对比,方便大家顺利转到新模块.新模块用习惯了,是不想回去滴.</p>
+
+<p>注意,表格中fn指一个包含文件路径的字符串,比如”/var/code/readme.txt”, obj指一个由pathlib.Path(fn)包裹的对象</p>
+
+<table class="table table-condensed">
+<tr>
+<th>老式</th>
+<th>新式</th>
+</tr>
+
+
+<tr>
+<td>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">base</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+<span class="c">#得到文件的目录</span></code></pre></div>
+
+</td>
+<td>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">obj</span><span class="o">.</span><span class="n">parent</span></code></pre></div>
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">base</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">base</span><span class="p">(</span><span class="n">fn</span><span class="p">))</span>
+<span class="c">#得到文件的父目录</span></code></pre></div>
+
+</td>
+<td>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">obj</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span></code></pre></div>
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">fn_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">base</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fn_path</span><span class="p">,</span> <span class="s">&quot;abc.txt&quot;</span><span class="p">)</span>
+<span class="c">#得到同目录下另外一个文件的路径</span></code></pre></div>
+
+</td>
+<td>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">obj</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s">&quot;abc.txt&quot;</span><span class="p">)</span></code></pre></div>
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="s">&quot;utf-8&quot;</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+  <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="c">#读取文本文件的内容</span></code></pre></div>
+
+</td>
+<td>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#python3.4</span>
+<span class="n">content</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&quot;utf-8&quot;</span><span class="p">)</span>
+<span class="c">#or</span>
+<span class="c">#python3.5</span>
+<span class="n">content</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="s">&quot;utf-8&quot;</span><span class="p">)</span></code></pre></div>
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">fn_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">base</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+<span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fn_path</span><span class="p">,</span> <span class="s">&quot;*.txt&quot;</span><span class="p">))</span>
+<span class="c">#枚举fn目录下的所有txt文件</span></code></pre></div>
+
+</td>
+<td>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">obj</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&quot;*.txt&quot;</span><span class="p">)</span></code></pre></div>
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">enum_dir</span><span class="p">(</span><span class="n">given_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+    <span class="c">#!@$#!@#$@#</span>
+    <span class="c">#!$#!@$$#!$</span>
+    <span class="c">#@!$#@!$#@1$</span>
+<span class="c">#遍历目录,并对目录下每个文件调用handler</span></code></pre></div>
+
+</td>
+<td>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">enum_dir</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+      <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+          <span class="n">enum_dir</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">handler</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+          <span class="n">handler</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></code></pre></div>
+
+</td>
+</tr>
+
+
+
+</table>
+
+<p>常用的就上述一些,pathlib的具体用法可以参考<a href="https://docs.python.org/3/library/pathlib.html">链接</a>,总之是一个用了不会吃亏的好模块.</p>
 
             </div>
             <!-- /.blog-post -->

@@ -7,27 +7,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <meta name="description" content="{{ page.excerpt| strip_html }}">
-    <meta name="author" content="{{ site.author }}">
-    <link rel="icon" type="image/png" href="{{ site.baseurl }}/Blog Template for Bootstrap_files/favicon.png"
+    <meta name="description" content="logs是python的理想国,让大家摆脱print使用的">
+    <meta name="author" content="bobcyw@163.com">
+    <link rel="icon" type="image/png" href="/blog/Blog Template for Bootstrap_files/favicon.png"
           sizes="any">
     <!--<link rel="icon" href="http://v3.bootcss.com/favicon.ico">-->
     <!--<link rel="icon" href="http://v3.bootcss.com/favicon.ico">-->
 
-    <title>{{ page.title }}</title>
+    <title>走近logs模块</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{{ site.baseurl }}/Blog Template for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
+    <link href="/blog/Blog Template for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="{{ site.baseurl }}/Blog Template for Bootstrap_files/blog.css" rel="stylesheet">
+    <link href="/blog/Blog Template for Bootstrap_files/blog.css" rel="stylesheet">
 
-    <link href="{{ site.baseurl }}/css/syntax.css" rel="stylesheet">
+    <link href="/blog/css/syntax.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]>
     <script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="{{ site.baseurl }}/Blog Template for Bootstrap_files/ie-emulation-modes-warning.js"></script>
+    <script src="/blog/Blog Template for Bootstrap_files/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -67,9 +67,9 @@
 <div class="container">
 
     <div class="blog-header">
-        <h1 class="blog-title">{{ page.title }}</h1>
+        <h1 class="blog-title">走近logs模块</h1>
 
-        <p class="lead blog-description">{{ page.excerpt }}</p>
+        <p class="lead blog-description">logs是python的理想国,让大家摆脱print使用的</p>
     </div>
 
     <div class="row">
@@ -77,7 +77,12 @@
         <div class="col-sm-8 blog-main">
 
             <div class="blog-post">
-                {{ content }}
+                <h2 id="formatter">formatter</h2>
+
+<h2 id="filter">filter</h2>
+
+<h2 id="section">内部的小秘密</h2>
+
             </div>
             <!-- /.blog-post -->
 
@@ -145,10 +150,22 @@
             <div class="sidebar-module">
                 <h4>Archives</h4>
                 <ol class="list-unstyled">
-                    {% for post in site.posts %}
-                    <li><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a> {{ post.date | date_to_string }}
+                    
+                    <li><a href="/blog/2015/10/23/%E8%B5%B0%E8%BF%91pathlib.html">走近pathlib</a> 23 Oct 2015
                     </li>
-                    {% endfor %}
+                    
+                    <li><a href="/blog/2015/10/23/%E8%B5%B0%E8%BF%91logs%E6%A8%A1%E5%9D%97.html">走近logs模块</a> 23 Oct 2015
+                    </li>
+                    
+                    <li><a href="/blog/2015/10/23/%E8%AE%A4%E8%AF%86%E5%8F%8C%E4%B8%8B%E5%88%92%E7%BA%BF%E5%BC%80%E5%A4%B4%E7%9A%84%E9%82%A3%E4%BA%9B%E5%8F%98%E9%87%8F.html">双下划线开头的那些变量</a> 23 Oct 2015
+                    </li>
+                    
+                    <li><a href="/blog/2015/10/20/git_clean%E7%BC%96%E7%A0%81.html">git_clean编码</a> 20 Oct 2015
+                    </li>
+                    
+                    <li><a href="/blog/2015/10/20/git%20_clean%E8%AE%BE%E8%AE%A1%E6%9E%84%E6%80%9D.html">git_clean设计构思</a> 20 Oct 2015
+                    </li>
+                    
 
                     <!--<li><a href="http://v3.bootcss.com/examples/blog/#">March 2014</a></li>-->
                     <!--<li><a href="http://v3.bootcss.com/examples/blog/#">February 2014</a></li>-->
@@ -194,14 +211,14 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="{{ site.baseurl }}/Blog Template for Bootstrap_files/jquery.min.js"></script>
-<script src="{{ site.baseurl }}/Blog Template for Bootstrap_files/bootstrap.min.js"></script>
+<script src="/blog/Blog Template for Bootstrap_files/jquery.min.js"></script>
+<script src="/blog/Blog Template for Bootstrap_files/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="{{ site.baseurl }}/Blog Template for Bootstrap_files/ie10-viewport-bug-workaround.js"></script>
+<script src="/blog/Blog Template for Bootstrap_files/ie10-viewport-bug-workaround.js"></script>
 
 
 <iframe id="rdbIndicator" width="100%" height="270" border="0"
-        src="{{ site.baseurl }}/Blog Template for Bootstrap_files/indicator.html"
+        src="/blog/Blog Template for Bootstrap_files/indicator.html"
         style="display: none; border: 0; position: fixed; left: 0; top: 0; z-index: 2147483647"></iframe>
 </body>
 </html>

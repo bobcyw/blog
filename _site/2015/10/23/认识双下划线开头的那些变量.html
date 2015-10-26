@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<!-- saved from url=(0036)http://v3.bootcss.com/examples/blog/ -->
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="面试有人会问双下划线和单下划线各有什么含义,纠结这些之乎者也的时候,系统提供的双下划线变量都认齐全了嘛?">
+    <meta name="author" content="bobcyw@163.com">
+    <link rel="icon" type="image/png" href="/blog/Blog Template for Bootstrap_files/favicon.png"
+          sizes="any">
+    <!--<link rel="icon" href="http://v3.bootcss.com/favicon.ico">-->
+    <!--<link rel="icon" href="http://v3.bootcss.com/favicon.ico">-->
+
+    <title>双下划线开头的那些变量</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/blog/Blog Template for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/blog/Blog Template for Bootstrap_files/blog.css" rel="stylesheet">
+
+    <link href="/blog/css/syntax.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]>
+    <script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="/blog/Blog Template for Bootstrap_files/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style id="style-1-cropbar-clipper">/* Copyright 2014 Evernote Corporation. All rights reserved. */
+    .en-markup-crop-options {
+        top: 18px !important;
+        left: 50% !important;
+        margin-left: -100px !important;
+        width: 200px !important;
+        border: 2px rgba(255, 255, 255, .38) solid !important;
+        border-radius: 4px !important;
+    }
+
+    .en-markup-crop-options div div:first-of-type {
+        margin-left: 0px !important;
+    }
+    </style>
+</head>
+
+<body>
+
+<div class="blog-masthead">
+    <div class="container">
+        <nav class="blog-nav">
+            <a class="blog-nav-item active" href="/blog/">Home</a>
+            <!--<a class="blog-nav-item" href="http://v3.bootcss.com/examples/blog/#">New features</a>-->
+            <!--<a class="blog-nav-item" href="http://v3.bootcss.com/examples/blog/#">Press</a>-->
+            <!--<a class="blog-nav-item" href="http://v3.bootcss.com/examples/blog/#">New hires</a>-->
+            <!--<a class="blog-nav-item" href="http://v3.bootcss.com/examples/blog/#">About</a>-->
+        </nav>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="blog-header">
+        <h1 class="blog-title">双下划线开头的那些变量</h1>
+
+        <p class="lead blog-description">面试有人会问双下划线和单下划线各有什么含义,纠结这些之乎者也的时候,系统提供的双下划线变量都认齐全了嘛?</p>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-8 blog-main">
+
+            <div class="blog-post">
+                <p>这些双下划线的变量或者函数,定义了很多模块,类,对象,方法和函数的行为.特别对于一些高级类的编写,合适的重载,会让类的调用更加亲近,也减少代码的出错率.</p>
+
+<table class="table table-condensed">
+<tr>
+<th>变量</th>
+<th>含义</th>
+</tr>
+
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__name__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+模块,类,方法,函数都有这个属性,里面包含的是当前对象的名字
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__main__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+当一个模块的__name__等于"__main__"的时候,意味着这个模块是被命令行或者解释器直接调用的.
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__qualname__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+类,方法,函数拥有的对象,里面包含的是<a href="http://www.python.org/dev/peps/pep-3155">PEP 3155</a>规定的,对象的正式名称
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__dict__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+大部分情况用于对象中,是对象的属性字典,可以通过obj.__dict__["x"]这样的方式访问对象的属性<br />
+也可以用于类中,注意类和对象中A.__dict__["fun"]和obj.__dict__["fun"]是不同的,前者表示的是一个类的方法,后者表示的是一个对象的方法.对象的方法会携带相关对象的上下文到方法中,而类的方法只是一个纯粹的函数<br />
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__class__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+对象携带的这个属性,表示对象的类型.<br />
+比如"abc".__class__得到的结果就是&lt;class 'str'&gt;.<br />
+而"abc".__class__("def")得到的就是一个内容为"def"的字符串<br />
+类也可以携带这个属性,但表示的只是它自己
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__bases__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+类拥有的属性,比如str.__base__,得到的就是str的基类&lt;class 'object'&gt;
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__mro__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+得到当前类的继承关系,比如str.__mro__得到,(&lt;class 'str'&gt;, &lt;class 'object'&gt;),表示str的继承关系是object&lt;-str
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__subclasses__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+得到当前类的所有子类,比如str.__subclasses__()得到的是[],而object.__subclasses__()则会得到很多子类[&lt;class 'range_iterator'&gt;, &lt;class 'dict_keys'&gt;...]
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__doc__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+得到当前调用者的注释,比如str.__doc__可以得到str类的注释,而"abc".__doc__得到的则是其类型str的注释.而这个注释在python中被称为Docstring,定义在<a href="https://www.python.org/dev/peps/pep-0257/">PEP 0257</a>中
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__qualname__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+得到当前调用者的"合法名称",通俗点说,和__name__相比,__qualname__不包含模块的名称.更多的定义参考<a href="https://www.python.org/dev/peps/pep-3155/">PEP 3155</a>
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__module__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+调用者调用__module__时,得到的是类所属的模块名,比如str.__module__得到的是'builtins',print.__module__得到的也是'builtins'<br />
+注意,方法没有这个属性str.replace.__module__,则会报错
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__defaults__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+对于下面这个函数
+<pre>
+&gt;&gt;&gt; def f(a=1):
+...     a=2
+...     return a
+</pre>
+f.__defaults__得到的就是(1,),即当前调用着的所有缺省值
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__code__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+这个函数得到的是被编译后的函数本身,但调用有很多问题.打印它的__doc__后,得到如下内容
+<pre>
+code(argcount, kwonlyargcount, nlocals,
+    stacksize, flags, codestring,
+      constants, names, varnames, filename,
+      name, firstlineno,
+      lnotab[, freevars[, cellvars]])
+
+Create a code object.  Not for the faint of heart.
+</pre>
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__globals__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+定义调用者的模块所持有的一个字典,这个字典包含模块的所有定义的类,函数. f.__globals__可以得到.
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__closure__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+显示闭包里所包含的变量值
+<pre>
+&gt;&gt;&gt; def g():
+...     a=1
+...     b=2
+...     c=0
+...     def h():
+...         nonlocal a,b,c
+...         c=a+b+c
+...         return c
+...     return h
+... g_f = g()
+</pre>
+调用g_f.__closure__[0].cell_contents,得到1,即a的值,调用g_f.__closure__[1].cell_contents得到2,即b的值,c的值则会不断变化
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__annotations__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+打印出由<a href="https://www.python.org/dev/peps/pep-0484/">PEP 0484</a>定义的对函数参数类型和返回的声明.直接照搬<a href="https://docs.python.org/3/tutorial/controlflow.html#function-annotations">官方</a>的例子了.
+<pre>
+&gt;&gt;&gt; def f(ham: str, eggs: str = 'eggs') -&gt; str:
+...     print("Annotations:", f.__annotations__)
+...     print("Arguments:", ham, eggs)
+...     return ham + ' and ' + eggs
+...
+&gt;&gt;&gt; f('spam')
+Annotations: {'ham': &lt;class 'str'&gt;,
+'return': &lt;class 'str'&gt;,
+'eggs': &lt;class 'str'&gt;}
+Arguments: spam eggs
+'spam and eggs'
+</pre>
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__kwdefaults__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+显示调用者的kwagrs定义的参数的缺省值(很隐晦),用下面的代码演示一下区别,注意参数中间的*号
+<pre>
+&gt;&gt;&gt; def a(a=1, *, b=2): pass
+&gt;&gt;&gt; a.__kwdefaults__
+{'b': 2}
+&gt;&gt;&gt; a.__defaults__
+(1,)
+</pre>
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__new__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+类的初始化函数,"初始"得连self都没有是一个静态函数,只有在特殊情况才要调用它. 原文In general, you shouldn't need to override __new__ unless you're subclassing an immutable type like str, int, unicode or tuple.
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__init__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+类的初始化函数,在__new__之后调用,这时已经有self,算是类的一个正式的方法.比如子类去修改一个父类原本不可以修改的的属性
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__del__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+用于在对象被删除时,对象的属性是一些需要手动释放的资源,则可以创建__del__函数来主动释放这些资源.注意子类定义__del__之后,会覆盖父类的__del__,要手动调用.
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__repr__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+一个对象的"正式"描述,返回的必须是字符串.并且,当__str__没有定义时,也用__repr__的返回的值来替代.
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__str__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+print调用__str__来显示一些信息,至于两者区别,可以用下面的代码来体会.
+<pre>
+&gt;&gt;&gt; class A:
+...     def __str__(self):
+...         return "A from __str__"
+...     def __repr__(self):
+...         return "A from __repr__"
+...
+&gt;&gt;&gt; a = A()
+&gt;&gt;&gt; print(a)
+A from __str__
+&gt;&gt;&gt; "{a}".format(a=a)
+'A from __str__'
+&gt;&gt;&gt; a
+A from __repr__
+</pre>
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__bytes__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+当bytes(obj)时,如果obj有实现__bytes__,则返回__bytes__里return的值
+<pre>
+&gt;&gt;&gt; class B:
+     def __bytes__(self):
+        return b'abc'
+&gt;&gt;&gt; b = B()
+&gt;&gt;&gt; bytes(b)
+</pre>
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__format__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+当有str.format()之类调用时,如果对象实现了__format__,则会返回一个符合<a href="https://docs.python.org/3.5/library/string.html#format-specification-mini-language">Format Specification Mini-Language</a>里format_spec定义的字符串,比如左对齐,右对齐,或者进行某种填充.返回值一定是字符串
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__lt__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+运算符重载,a &lt; b
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__le__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+运算符重载,a &lt;= b
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__eq__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+运算符重载,a == b
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__ne__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+运算符重载,a != b
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__gt__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+运算符重载, a &gt; b
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__ge__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+运算符重载, a &gt;= b
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__hash__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+自定义的类,hash(obj)时,如果obj实现了__hash__,就调用.注意,__hash__和__eq__有一定的联系,两者要保持精确一致.
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__bool__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+bool(obj)时,如果obj实现了__bool__,就调用,返回值是true或者false,没有就查看__len__有没有实现,如果__len__实现了,则非0表示true,0表示false,如果两个都没有,则obj永远返回true
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__getattr__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+当obj对象用.去查找一个属性或者方法的时候,如果这个属性或者方法不存在,就转到__getattr__,由__getattr__处理.
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__getattribute__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+当obj用.去查找一个属性或者方法的时候,直接转到__getattribute__,而不会先查已有的值.
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__setattr__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__delattr__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__dir__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__get__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__set__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__delete__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__slots__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__prepare__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__instancecheck__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__subclasscheck__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__call__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__len__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__length_hint__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__getitem__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__missing__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__setitem__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__delitem__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__iter__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__reversed__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__contains__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__add__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__sub__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__mul__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__matmul__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__truediv__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__floordiv__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__mod__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__divmod__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__pow__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__lshift__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__rshift__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__and__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__xor__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__or__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__radd__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__rsub__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__rmul__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__rmatmul__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__rtruediv__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__rfloordiv__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__rmod__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__rdivmod__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__rpow__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__rlshift__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__rrshift__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__rand__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__rxor__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__ror__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__iadd__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__isub__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__imul__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__imatmul__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__itruediv__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__ifloordiv__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__imod__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__ipow__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__ilshift__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__irshift__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__iand__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__ixor__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__ior__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__neg__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__pos__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__abs__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__invert__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__complex__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__int__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__float__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__round__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__index__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__enter__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__exit__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__aiter__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__anext__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__aenter__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+<tr>
+<td class="col-xs-4">
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__aexit__</span></code></pre></div>
+
+</td>
+<td class="col-xs-8">
+
+</td>
+</tr>
+
+
+
+
+</table>
+
+            </div>
+            <!-- /.blog-post -->
+
+            <!--<div class="blog-post">-->
+                <!--<h2 class="blog-post-title">Another blog post</h2>-->
+
+                <!--<p class="blog-post-meta">December 23, 2013 by <a href="http://v3.bootcss.com/examples/blog/#">Jacob</a>-->
+                <!--</p>-->
+
+                <!--<p>Cum sociis natoque penatibus et magnis <a href="http://v3.bootcss.com/examples/blog/#">dis parturient-->
+                    <!--montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam-->
+                    <!--venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit-->
+                    <!--amet fermentum.</p>-->
+                <!--<blockquote>-->
+                    <!--<p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare-->
+                        <!--vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>-->
+                <!--</blockquote>-->
+                <!--<p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet-->
+                    <!--fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>-->
+
+                <!--<p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo-->
+                    <!--luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac-->
+                    <!--consectetur ac, vestibulum at eros.</p>-->
+            <!--</div>-->
+            <!--&lt;!&ndash; /.blog-post &ndash;&gt;-->
+
+            <!--<div class="blog-post">-->
+                <!--<h2 class="blog-post-title">New feature</h2>-->
+
+                <!--<p class="blog-post-meta">December 14, 2013 by <a href="http://v3.bootcss.com/examples/blog/#">Chris</a>-->
+                <!--</p>-->
+
+                <!--<p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia-->
+                    <!--bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus,-->
+                    <!--tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet-->
+                    <!--risus.</p>-->
+                <!--<ul>-->
+                    <!--<li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>-->
+                    <!--<li>Donec id elit non mi porta gravida at eget metus.</li>-->
+                    <!--<li>Nulla vitae elit libero, a pharetra augue.</li>-->
+                <!--</ul>-->
+                <!--<p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet-->
+                    <!--fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>-->
+
+                <!--<p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>-->
+            <!--</div>-->
+            <!-- /.blog-post -->
+
+            <!--<nav>-->
+                <!--<ul class="pager">-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">Previous</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">Next</a></li>-->
+                <!--</ul>-->
+            <!--</nav>-->
+
+        </div>
+        <!-- /.blog-main -->
+
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+            <div class="sidebar-module sidebar-module-inset">
+                <h4>About</h4>
+
+                <p>这里主要是一些技术笔记,和小翻译,希望对大家有用.</p>
+            </div>
+            <div class="sidebar-module">
+                <h4>Archives</h4>
+                <ol class="list-unstyled">
+                    
+                    <li><a href="/blog/2015/10/23/%E8%B5%B0%E8%BF%91pathlib.html">走近pathlib</a> 23 Oct 2015
+                    </li>
+                    
+                    <li><a href="/blog/2015/10/23/%E8%B5%B0%E8%BF%91logs%E6%A8%A1%E5%9D%97.html">走近logs模块</a> 23 Oct 2015
+                    </li>
+                    
+                    <li><a href="/blog/2015/10/23/%E8%AE%A4%E8%AF%86%E5%8F%8C%E4%B8%8B%E5%88%92%E7%BA%BF%E5%BC%80%E5%A4%B4%E7%9A%84%E9%82%A3%E4%BA%9B%E5%8F%98%E9%87%8F.html">双下划线开头的那些变量</a> 23 Oct 2015
+                    </li>
+                    
+                    <li><a href="/blog/2015/10/20/git_clean%E7%BC%96%E7%A0%81.html">git_clean编码</a> 20 Oct 2015
+                    </li>
+                    
+                    <li><a href="/blog/2015/10/20/git%20_clean%E8%AE%BE%E8%AE%A1%E6%9E%84%E6%80%9D.html">git_clean设计构思</a> 20 Oct 2015
+                    </li>
+                    
+
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">March 2014</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">February 2014</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">January 2014</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">December 2013</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">November 2013</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">October 2013</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">September 2013</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">August 2013</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">July 2013</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">June 2013</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">May 2013</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">April 2013</a></li>-->
+                </ol>
+            </div>
+            <div class="sidebar-module">
+                <h4>Elsewhere</h4>
+                <ol class="list-unstyled">
+                    <li><a href="https://github.com/bobcyw/">GitHub</a></li>
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">Twitter</a></li>-->
+                    <!--<li><a href="http://v3.bootcss.com/examples/blog/#">Facebook</a></li>-->
+                </ol>
+            </div>
+        </div>
+        <!-- /.blog-sidebar -->
+
+    </div>
+    <!-- /.row -->
+
+</div>
+<!-- /.container -->
+
+<footer class="blog-footer">
+    <p>Blog template built for <a href="http://getbootstrap.com/">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.
+    </p>
+
+    <p>
+        <a href="http://v3.bootcss.com/examples/blog/#">Back to top</a>
+    </p>
+</footer>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/blog/Blog Template for Bootstrap_files/jquery.min.js"></script>
+<script src="/blog/Blog Template for Bootstrap_files/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="/blog/Blog Template for Bootstrap_files/ie10-viewport-bug-workaround.js"></script>
+
+
+<iframe id="rdbIndicator" width="100%" height="270" border="0"
+        src="/blog/Blog Template for Bootstrap_files/indicator.html"
+        style="display: none; border: 0; position: fixed; left: 0; top: 0; z-index: 2147483647"></iframe>
+</body>
+</html>

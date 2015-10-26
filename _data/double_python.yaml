@@ -1,0 +1,266 @@
+- val: __name__
+  owner: 模块,类,方法,函数
+  des: 模块,类,方法,函数都有这个属性,里面包含的是当前对象的名字
+- val: __main__
+  owner: 模块
+  des: 当一个模块的__name__等于"__main__"的时候,意味着这个模块是被命令行或者解释器直接调用的.
+- val: __qualname__
+  owner: 类,方法,函数
+  des: 类,方法,函数拥有的对象,里面包含的是<a href="http://www.python.org/dev/peps/pep-3155">PEP 3155</a>规定的,对象的正式名称
+- val: __dict__
+  owner: 对象,类
+  des: |
+    大部分情况用于对象中,是对象的属性字典,可以通过obj.__dict__["x"]这样的方式访问对象的属性<br>
+    也可以用于类中,注意类和对象中A.__dict__["fun"]和obj.__dict__["fun"]是不同的,前者表示的是一个类的方法,后者表示的是一个对象的方法.对象的方法会携带相关对象的上下文到方法中,而类的方法只是一个纯粹的函数<br>
+- val: __class__
+  owner: 对象,类
+  des: |
+    对象携带的这个属性,表示对象的类型.<br>
+    比如"abc".__class__得到的结果就是<class 'str'>.<br>
+    而"abc".__class__("def")得到的就是一个内容为"def"的字符串<br>
+    类也可以携带这个属性,但表示的只是它自己
+- val: __bases__
+  owner: 类
+  des: 类拥有的属性,比如str.__base__,得到的就是str的基类<class 'object'>
+- val: __mro__
+  owenr: 类
+  des: 得到当前类的继承关系,比如str.__mro__得到,(<class 'str'>, <class 'object'>),表示str的继承关系是object<-str
+- val: __subclasses__
+  owner: 类
+  des: 得到当前类的所有子类,比如str.__subclasses__()得到的是[],而object.__subclasses__()则会得到很多子类[<class 'range_iterator'>, <class 'dict_keys'>...]
+- val: __doc__
+  owner: 模块,类,对象,函数,方法
+  des: 得到当前调用者的注释,比如str.__doc__可以得到str类的注释,而"abc".__doc__得到的则是其类型str的注释.而这个注释在python中被称为Docstring,定义在<a href="https://www.python.org/dev/peps/pep-0257/">PEP 0257</a>中
+- val: __qualname__
+  owner: 类,函数,方法
+  des: 得到当前调用者的"合法名称",通俗点说,和__name__相比,__qualname__不包含模块的名称.更多的定义参考<a href="https://www.python.org/dev/peps/pep-3155/">PEP 3155</a>
+- val: __module__
+  owner: 类,函数
+  des: |
+    调用者调用__module__时,得到的是类所属的模块名,比如str.__module__得到的是'builtins',print.__module__得到的也是'builtins'<br>
+    注意,方法没有这个属性str.replace.__module__,则会报错
+- val: __defaults__
+  owner: 用户定义的函数和方法,或者一切Callable types
+  des: |
+    对于下面这个函数
+    <pre>
+    >>> def f(a=1):
+    ...     a=2
+    ...     return a
+    </pre>
+    f.__defaults__得到的就是(1,),即当前调用着的所有缺省值
+- val: __code__
+  owenr: 用户定义的函数和方法,或者一切Callable types
+  des: |
+    这个函数得到的是被编译后的函数本身,但调用有很多问题.打印它的__doc__后,得到如下内容
+    <pre>
+    code(argcount, kwonlyargcount, nlocals,
+        stacksize, flags, codestring,
+          constants, names, varnames, filename,
+          name, firstlineno,
+          lnotab[, freevars[, cellvars]])
+
+    Create a code object.  Not for the faint of heart.
+    </pre>
+- val: __globals__
+  owner: 用户定义的函数和方法,或者一切Callable types
+  des: 定义调用者的模块所持有的一个字典,这个字典包含模块的所有定义的类,函数. f.__globals__可以得到.
+- val: __closure__
+  owner: 用户定义的函数和方法,或者一切Callable types
+  des: |
+    显示闭包里所包含的变量值
+    <pre>
+    >>> def g():
+    ...     a=1
+    ...     b=2
+    ...     c=0
+    ...     def h():
+    ...         nonlocal a,b,c
+    ...         c=a+b+c
+    ...         return c
+    ...     return h
+    ... g_f = g()
+    </pre>
+    调用g_f.__closure__[0].cell_contents,得到1,即a的值,调用g_f.__closure__[1].cell_contents得到2,即b的值,c的值则会不断变化
+- val: __annotations__
+  owner: 用户定义的函数和方法,或者一切Callable types
+  des: |
+    打印出由<a href="https://www.python.org/dev/peps/pep-0484/">PEP 0484</a>定义的对函数参数类型和返回的声明.直接照搬<a href="https://docs.python.org/3/tutorial/controlflow.html#function-annotations">官方</a>的例子了.
+    <pre>
+    >>> def f(ham: str, eggs: str = 'eggs') -> str:
+    ...     print("Annotations:", f.__annotations__)
+    ...     print("Arguments:", ham, eggs)
+    ...     return ham + ' and ' + eggs
+    ...
+    >>> f('spam')
+    Annotations: {'ham': <class 'str'>,
+    'return': <class 'str'>,
+    'eggs': <class 'str'>}
+    Arguments: spam eggs
+    'spam and eggs'
+    </pre>
+
+- val: __kwdefaults__
+  owner: 用户定义的函数和方法,或者一切Callable types
+  des: |
+    显示调用者的kwagrs定义的参数的缺省值(很隐晦),用下面的代码演示一下区别,注意参数中间的*号
+    <pre>
+    >>> def a(a=1, *, b=2): pass
+    >>> a.__kwdefaults__
+    {'b': 2}
+    >>> a.__defaults__
+    (1,)
+    </pre>
+- val: __new__
+  owner: 类
+  des: |
+    类的初始化函数,"初始"得连self都没有是一个静态函数,只有在特殊情况才要调用它. 原文In general, you shouldn't need to override __new__ unless you're subclassing an immutable type like str, int, unicode or tuple.
+- val: __init__
+  owner: 类
+  des: 类的初始化函数,在__new__之后调用,这时已经有self,算是类的一个正式的方法.比如子类去修改一个父类原本不可以修改的的属性
+- val: __del__
+  owner: 类
+  des: 用于在对象被删除时,对象的属性是一些需要手动释放的资源,则可以创建__del__函数来主动释放这些资源.注意子类定义__del__之后,会覆盖父类的__del__,要手动调用.
+- val: __repr__
+  owner: 类
+  des: |
+    一个对象的"正式"描述,返回的必须是字符串.并且,当__str__没有定义时,也用__repr__的返回的值来替代.
+- val: __str__
+  owner: 类
+  des: |
+    print调用__str__来显示一些信息,至于两者区别,可以用下面的代码来体会.
+    <pre>
+    >>> class A:
+    ...     def __str__(self):
+    ...         return "A from __str__"
+    ...     def __repr__(self):
+    ...         return "A from __repr__"
+    ...
+    >>> a = A()
+    >>> print(a)
+    A from __str__
+    >>> "{a}".format(a=a)
+    'A from __str__'
+    >>> a
+    A from __repr__
+    </pre>
+- val: __bytes__
+  owner: 类
+  des: |
+    当bytes(obj)时,如果obj有实现__bytes__,则返回__bytes__里return的值
+    <pre>
+    >>> class B:
+         def __bytes__(self):
+            return b'abc'
+    >>> b = B()
+    >>> bytes(b)
+    </pre>
+- val: __format__
+  owner: 类
+  des: 当有str.format()之类调用时,如果对象实现了__format__,则会返回一个符合<a href="https://docs.python.org/3.5/library/string.html#format-specification-mini-language">Format Specification Mini-Language</a>里format_spec定义的字符串,比如左对齐,右对齐,或者进行某种填充.返回值一定是字符串
+- val: __lt__
+  owner: 类
+  des: 运算符重载,a < b
+- val: __le__
+  owner: 类
+  des: 运算符重载,a <= b
+- val: __eq__
+  owner: 类
+  des: 运算符重载,a == b
+- val: __ne__
+  owenr: 类
+  des: 运算符重载,a != b
+- val: __gt__
+  owner: 类
+  des: 运算符重载, a > b
+- val: __ge__
+  owner: 类
+  des: 运算符重载, a >= b
+- val: __hash__
+  owner: 类
+  des: 自定义的类,hash(obj)时,如果obj实现了__hash__,就调用.注意,__hash__和__eq__有一定的联系,两者要保持精确一致.
+- val: __bool__
+  owner: 类
+  des: bool(obj)时,如果obj实现了__bool__,就调用,返回值是true或者false,没有就查看__len__有没有实现,如果__len__实现了,则非0表示true,0表示false,如果两个都没有,则obj永远返回true
+- val: __getattr__
+  owner: 类
+  des: 当obj对象用.去查找一个属性或者方法的时候,如果这个属性或者方法不存在,就转到__getattr__,由__getattr__处理.
+- val: __getattribute__
+  owner: 类
+  des: 当obj用.去查找一个属性或者方法的时候,直接转到__getattribute__,而不会先查已有的值.
+- val: __setattr__
+- val: __delattr__
+- val: __dir__
+- val: __get__
+- val: __set__
+- val: __delete__
+- val: __slots__
+- val: __prepare__
+- val: __instancecheck__
+- val: __subclasscheck__
+- val: __call__
+- val: __len__
+- val: __length_hint__
+- val: __getitem__
+- val: __missing__
+- val: __setitem__
+- val: __delitem__
+- val: __iter__
+- val: __reversed__
+- val: __contains__
+- val: __add__
+- val: __sub__
+- val: __mul__
+- val: __matmul__
+- val: __truediv__
+- val: __floordiv__
+- val: __mod__
+- val: __divmod__
+- val: __pow__
+- val: __lshift__
+- val: __rshift__
+- val: __and__
+- val: __xor__
+- val: __or__
+- val: __radd__
+- val: __rsub__
+- val: __rmul__
+- val: __rmatmul__
+- val: __rtruediv__
+- val: __rfloordiv__
+- val: __rmod__
+- val: __rdivmod__
+- val: __rpow__
+- val: __rlshift__
+- val: __rrshift__
+- val: __rand__
+- val: __rxor__
+- val: __ror__
+- val: __iadd__
+- val: __isub__
+- val: __imul__
+- val: __imatmul__
+- val: __itruediv__
+- val: __ifloordiv__
+- val: __imod__
+- val: __ipow__
+- val: __ilshift__
+- val: __irshift__
+- val: __iand__
+- val: __ixor__
+- val: __ior__
+- val: __neg__
+- val: __pos__
+- val: __abs__
+- val: __invert__
+- val: __complex__
+- val: __int__
+- val: __float__
+- val: __round__
+- val: __index__
+- val: __enter__
+- val: __exit__
+- val: __aiter__
+- val: __anext__
+- val: __aenter__
+- val: __aexit__
