@@ -1,6 +1,6 @@
 ---
 layout: Blog Template for Bootstrap
-title: git_clean设计构思
+title: git_cleaner设计构思
 excerpt: 从用户设计, 内部设计和隐喻设计三个方面,介绍git_clean的设计思路
 ---
 ![github](/blog/pic/github.jpeg)[github](https://github.com/bobcyw/git_cleaner)

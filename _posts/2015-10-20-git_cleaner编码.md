@@ -1,6 +1,6 @@
 ---
 layout: Blog Template for Bootstrap
-title: git_clean编码
+title: git_cleaner编码
 excerpt: 简要介绍一下编程流程
 ---
 ![github](/blog/pic/github.jpeg)[github](https://github.com/bobcyw/git_cleaner)
