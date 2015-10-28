@@ -48,6 +48,15 @@
         margin-left: 0px !important;
     }
     </style>
+    <!--Frame Killer -->
+    <style> html{display:none;} </style>
+    <script>
+       if(self == top) {
+           document.documentElement.style.display = 'block';
+       } else {
+           top.location = self.location;
+       }
+    </script>
 </head>
 
 <body>
@@ -56,6 +65,7 @@
     <div class="container">
         <nav class="blog-nav">
             <a class="blog-nav-item active" href="/blog/">Home</a>
+            <a class="blog-nav-item active" href="http://resume.wisdomfruit.com">返回个人简历</a>
             <!--<a class="blog-nav-item" href="http://v3.bootcss.com/examples/blog/#">New features</a>-->
             <!--<a class="blog-nav-item" href="http://v3.bootcss.com/examples/blog/#">Press</a>-->
             <!--<a class="blog-nav-item" href="http://v3.bootcss.com/examples/blog/#">New hires</a>-->
