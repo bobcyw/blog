@@ -7,27 +7,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <meta name="description" content="{{ page.excerpt| strip_html }}">
-    <meta name="author" content="{{ site.author }}">
-    <link rel="icon" type="image/png" href="{{ site.baseurl }}/Blog Template for Bootstrap_files/favicon.png"
+    <meta name="description" content="从用户设计, 内部设计和隐喻设计三个方面,介绍git_clean的设计思路">
+    <meta name="author" content="bobcyw@163.com">
+    <link rel="icon" type="image/png" href="/blog/Blog Template for Bootstrap_files/favicon.png"
           sizes="any">
     <!--<link rel="icon" href="http://v3.bootcss.com/favicon.ico">-->
     <!--<link rel="icon" href="http://v3.bootcss.com/favicon.ico">-->
 
-    <title>{{ page.title }}</title>
+    <title>git_cleaner设计构思</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{{ site.baseurl }}/Blog Template for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
+    <link href="/blog/Blog Template for Bootstrap_files/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="{{ site.baseurl }}/Blog Template for Bootstrap_files/blog.css" rel="stylesheet">
+    <link href="/blog/Blog Template for Bootstrap_files/blog.css" rel="stylesheet">
 
-    <link href="{{ site.baseurl }}/css/syntax.css" rel="stylesheet">
+    <link href="/blog/css/syntax.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]>
     <script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="{{ site.baseurl }}/Blog Template for Bootstrap_files/ie-emulation-modes-warning.js"></script>
+    <script src="/blog/Blog Template for Bootstrap_files/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -77,9 +77,9 @@
 <div class="container">
 
     <div class="blog-header">
-        <h1 class="blog-title">{{ page.title }}</h1>
+        <h1 class="blog-title">git_cleaner设计构思</h1>
 
-        <p class="lead blog-description">{{ page.excerpt }}</p>
+        <p class="lead blog-description">从用户设计, 内部设计和隐喻设计三个方面,介绍git_clean的设计思路</p>
     </div>
 
     <div class="row">
@@ -87,7 +87,69 @@
         <div class="col-sm-8 blog-main">
 
             <div class="blog-post">
-                {{ content }}
+                <p><img src="/blog/pic/github.jpeg" alt="github" /><a href="https://github.com/bobcyw/git_cleaner">github</a></p>
+
+<h2 id="section">现状</h2>
+<p>现在开源软件已经成为了趋势,很多时候私有软件开源,面临大量敏感文件需要清理(密钥,密码和内部信息).  </p>
+
+<h4 id="section-1">目前的解决办法</h4>
+<ul>
+  <li>git branch-filter</li>
+</ul>
+
+<blockquote>
+  <p><sup>git自带的清理命令,可以回溯删除所有commite里包含的指定文件或者目录</sup></p>
+</blockquote>
+
+<ul>
+  <li>BFG</li>
+</ul>
+
+<blockquote>
+  <p><sup>git branch-filter的升级版,可以删除超出指定大小的文件,比如意外加入的过大的图片等</sup></p>
+</blockquote>
+
+<p>这两个办法都需要指定文件名称,都是命令行模式,BFG也没有对删除尺寸较小的敏感文件给出解决方案.</p>
+
+<h4 id="section-2">痛点</h4>
+
+<p>很多清理的时候并不知道文件名称,很多敏感信息都散落在各个文件里,只知道一些信息的特征,但不知道名字,比如rsa密钥都包含—–BEGIN RSA PRIVATE KEY—–这样的字符串,而包含了password,密码这样字符串的信息都必须小心处理.
+现有的上述两种工具并不提供检索功能.  </p>
+
+<h2 id="gitclean">git_clean应运而生</h2>
+
+<blockquote>
+  <p><sup>git_clean功能同样是删除git里不应该有的敏感数据,它主要提供了文件配置,以及特征值检索的功能,由于使用配置文件还衍生出可以对不同目录进行不同的清理.</sup></p>
+</blockquote>
+
+<h4 id="section-3">用户使用设计</h4>
+
+<ul>
+  <li>借鉴现在的docker和AWS描述方式,软件行为定义用一个配置文件来定义,方便复用和修改.  </li>
+  <li>配置文件的格式优先选择yaml<sup><a href="http://docs.saltstack.cn/zh_CN/latest/topics/yaml/index.html">简明教程</a>,<a href="http://yaml.org/">官方链接</a></sup>,这个格式结构比json更简洁.  </li>
+  <li>用户有三种描述需要删除文件的方式,指定文件,指定目录,指定文件的特征值.<img src="/blog/pic/git_cleaner选择演示.png" alt="选择演示" /></li>
+  <li>从执行的角度,参考python的2to3模块,有只输出报告,和真实删除两种模式.</li>
+  <li>从git角度看,由于子模块的存在,每个模块的配置文件可能不同.所以,配置文件也应该像树一样有节点.彼此可以连接.<img src="/blog/pic/get_clean子目录说明.png" alt="子目录配置" />  </li>
+</ul>
+
+<h4 id="section-4">内部细节设计</h4>
+
+<ul>
+  <li>文件的路径表述,参考git的设计,路径全部使用相对路径.进而衍生出每个配置文件的”根目录”指定问题.这个问题在设计初期使用直接指定的方法,但在后来的使用过程中,感觉很啰嗦,化简思考后,把显示指定目录改为隐性指定目录,转成<a href="#隐喻设计">隐喻设计</a>.  </li>
+  <li>指定特征值的方式,可能把一些不该删除的文件也删除掉,比如配置文件本身.或者某些不想删除的文件,遇到这种情况,需要有字段专门说明需要排除的文件  </li>
+</ul>
+
+<h4 id="隐喻设计">隐喻设计</h4>
+
+<blockquote>
+  <p><sup>此处的隐喻设计特指某种潜意识设计,即用户不用学习和理解,通过跟以往经验进行对比就能直接理解的设计</sup></p>
+</blockquote>
+
+<ul>
+  <li>配置文件管理指定的”根目录”,大部分情况,把配置文件放在哪个目录下,就表示对哪个目录生效,这种常见的表述方式,用户已经形成习惯,所以在配置文件里指定”根目录”没有必要,徒添用户额外的学习负担.  </li>
+  <li>默认操作并不删除文件,而只是给出要删除文件的报告,这方便新手用户,在不知情的情况下也不会误删文件.  </li>
+</ul>
+
             </div>
             <!-- /.blog-post -->
 
@@ -155,10 +217,22 @@
             <div class="sidebar-module">
                 <h4>Archives</h4>
                 <ol class="list-unstyled">
-                    {% for post in site.posts %}
-                    <li><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a> {{ post.date | date_to_string }}
+                    
+                    <li><a href="/blog/2015/10/23/%E8%B5%B0%E8%BF%91pathlib.html">走近pathlib</a> 23 Oct 2015
                     </li>
-                    {% endfor %}
+                    
+                    <li><a href="/blog/2015/10/23/%E8%B5%B0%E8%BF%91logs%E6%A8%A1%E5%9D%97.html">走近logs模块</a> 23 Oct 2015
+                    </li>
+                    
+                    <li><a href="/blog/2015/10/23/%E8%AE%A4%E8%AF%86%E5%8F%8C%E4%B8%8B%E5%88%92%E7%BA%BF%E5%BC%80%E5%A4%B4%E7%9A%84%E9%82%A3%E4%BA%9B%E5%8F%98%E9%87%8F.html">双下划线开头的那些变量</a> 23 Oct 2015
+                    </li>
+                    
+                    <li><a href="/blog/2015/10/20/git_cleaner%E8%AE%BE%E8%AE%A1%E6%9E%84%E6%80%9D.html">git_cleaner设计构思</a> 20 Oct 2015
+                    </li>
+                    
+                    <li><a href="/blog/2015/10/20/git_cleaner%E7%BC%96%E7%A0%81.html">git_cleaner编码</a> 20 Oct 2015
+                    </li>
+                    
 
                     <!--<li><a href="http://v3.bootcss.com/examples/blog/#">March 2014</a></li>-->
                     <!--<li><a href="http://v3.bootcss.com/examples/blog/#">February 2014</a></li>-->
@@ -204,14 +278,14 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="{{ site.baseurl }}/Blog Template for Bootstrap_files/jquery.min.js"></script>
-<script src="{{ site.baseurl }}/Blog Template for Bootstrap_files/bootstrap.min.js"></script>
+<script src="/blog/Blog Template for Bootstrap_files/jquery.min.js"></script>
+<script src="/blog/Blog Template for Bootstrap_files/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="{{ site.baseurl }}/Blog Template for Bootstrap_files/ie10-viewport-bug-workaround.js"></script>
+<script src="/blog/Blog Template for Bootstrap_files/ie10-viewport-bug-workaround.js"></script>
 
 
 <iframe id="rdbIndicator" width="100%" height="270" border="0"
-        src="{{ site.baseurl }}/Blog Template for Bootstrap_files/indicator.html"
+        src="/blog/Blog Template for Bootstrap_files/indicator.html"
         style="display: none; border: 0; position: fixed; left: 0; top: 0; z-index: 2147483647"></iframe>
 </body>
 </html>
